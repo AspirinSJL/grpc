@@ -306,6 +306,51 @@ static void add_pending_ping(pending_ping** root, grpc_closure* on_initiate,
  */
 typedef struct rr_connectivity_data rr_connectivity_data;
 
+typedef struct glb_lb_call_data {
+  glb_lb_policy* glb_policy;
+
+  gpr_refcount refs;
+
+  /** the streaming call to the LB server */
+  grpc_call* lb_call;
+
+  /** the initial metadata received from the LB server */
+  grpc_metadata_array lb_initial_metadata_recv;
+
+  /** the message sent to the LB server (the value may vary if the LB server indicates a redirect) */
+  grpc_byte_buffer* lb_request_payload;
+  /** the callback after the initial request is sent */
+  grpc_closure lb_on_sent_initial_request;
+  bool initial_request_sent;
+
+  /** the response received from the LB server, if any */
+  grpc_byte_buffer* lb_response_payload;
+  /** the callback to process the response received from the LB server */
+  grpc_closure lb_on_response_received;
+  bool seen_initial_response;
+
+  /** the callback to process the status received from the LB server, which signals the end of the LB call */
+  grpc_closure lb_on_server_status_received;
+  /** the trailing metadata from the LB server */
+  grpc_metadata_array lb_trailing_metadata_recv;
+  /** the call status code and details */
+  grpc_status_code lb_call_status;
+  grpc_slice lb_call_status_details;
+
+  /** the stats for client-side load reporting associated with this LB call */
+  grpc_grpclb_client_stats* client_stats;
+  /** the interval and timer for next client load report */
+  grpc_millis client_stats_report_interval;
+  grpc_timer client_load_report_timer;
+  bool client_load_report_timer_pending;
+  bool last_client_load_report_counters_were_zero;
+  /** the closure used for either the load report timer or the callback for completion of sending the load report */
+  grpc_closure client_load_report_closure;
+
+  //TODO: may reuse lb_request_payload
+  grpc_byte_buffer* client_load_report_payload;
+} glb_lb_call_data;
+
 typedef struct glb_lb_policy {
   /** base policy: must be first */
   grpc_lb_policy base;
@@ -377,64 +422,18 @@ typedef struct glb_lb_policy {
   /************************************************************/
   /*  client data associated with the LB server communication */
   /************************************************************/
-  /* Finished sending initial request. */
-  grpc_closure lb_on_sent_initial_request;
-
-  /* Status from the LB server has been received. This signals the end of the LB
-   * call. */
-  grpc_closure lb_on_server_status_received;
-
-  /* A response from the LB server has been received. Process it */
-  grpc_closure lb_on_response_received;
-
-  /* LB call retry timer callback. */
-  grpc_closure lb_on_call_retry;
-
-  /* LB fallback timer callback. */
-  grpc_closure lb_on_fallback;
-
-  grpc_call* lb_call; /* streaming call to the LB server, */
-
-  grpc_metadata_array lb_initial_metadata_recv; /* initial MD from LB server */
-  grpc_metadata_array
-      lb_trailing_metadata_recv; /* trailing MD from LB server */
-
-  /* what's being sent to the LB server. Note that its value may vary if the LB
-   * server indicates a redirect. */
-  grpc_byte_buffer* lb_request_payload;
-
-  /* response the LB server, if any. Processed in lb_on_response_received() */
-  grpc_byte_buffer* lb_response_payload;
-
-  /* call status code and details, set in lb_on_server_status_received() */
-  grpc_status_code lb_call_status;
-  grpc_slice lb_call_status_details;
 
   /** LB call retry backoff state */
   grpc_backoff lb_call_backoff_state;
-
   /** LB call retry timer */
   grpc_timer lb_call_retry_timer;
+  /** LB call retry timer callback */
+  grpc_closure lb_on_call_retry;
 
   /** LB fallback timer */
   grpc_timer lb_fallback_timer;
-
-  bool initial_request_sent;
-  bool seen_initial_response;
-
-  /* Stats for client-side load reporting. Should be unreffed and
-   * recreated whenever lb_call is replaced. */
-  grpc_grpclb_client_stats* client_stats;
-  /* Interval and timer for next client load report. */
-  grpc_millis client_stats_report_interval;
-  grpc_timer client_load_report_timer;
-  bool client_load_report_timer_pending;
-  bool last_client_load_report_counters_were_zero;
-  /* Closure used for either the load report timer or the callback for
-   * completion of sending the load report. */
-  grpc_closure client_load_report_closure;
-  /* Client load report message payload. */
-  grpc_byte_buffer* client_load_report_payload;
+  /** LB fallback timer callback */
+  grpc_closure lb_on_fallback;
 } glb_lb_policy;
 
 /* Keeps track and reacts to changes in connectivity of the RR instance */
