@@ -58,6 +58,7 @@ os.chdir(_ROOT)
 
 _FORCE_ENVIRON_FOR_WRAPPERS = {
     'GRPC_VERBOSITY': 'DEBUG',
+    'GRPC_TRACE' : 'glb,pick_first,client_channel',
 }
 
 _POLLING_STRATEGIES = {
