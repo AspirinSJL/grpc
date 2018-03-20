@@ -1276,7 +1276,7 @@ argp.add_argument(
 argp.add_argument(
     '-n',
     '--runs_per_test',
-    default=1,
+    default=1000,
     type=runs_per_test_type,
     help='A positive integer or "inf". If "inf", all tests will run in an '
     'infinite loop. Especially useful in combination with "-f"')
