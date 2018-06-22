@@ -987,7 +987,7 @@ grpc_cc_library(
         "grpc_client_authority_filter",
         "grpc_lb_policy_pick_first",
         "grpc_lb_policy_round_robin",
-        "grpc_server_load_reporting",
+        "grpc_server_load_reporting_filter",
         "grpc_max_age_filter",
         "grpc_message_size_filter",
         "grpc_resolver_dns_ares",
@@ -1287,18 +1287,21 @@ grpc_cc_library(
 )
 
 grpc_cc_library(
-    name = "grpc_server_load_reporting",
+    name = "grpc_server_load_reporting_filter",
     srcs = [
         "src/core/ext/filters/load_reporting/server_load_reporting_filter.cc",
         "src/core/ext/filters/load_reporting/server_load_reporting_plugin.cc",
     ],
     hdrs = [
+        "src/core/ext/filters/load_reporting/registered_opencensus_objects.h",
         "src/core/ext/filters/load_reporting/server_load_reporting_filter.h",
         "src/core/ext/filters/load_reporting/server_load_reporting_plugin.h",
+        "src/cpp/server/load_reporter/constants.h",
     ],
     language = "c++",
     deps = [
-        "grpc_base",
+        "grpc_secure",
+        "@io_opencensus_cpp//opencensus/stats",
     ],
 )
 
@@ -1310,6 +1313,23 @@ grpc_cc_library(
     hdrs = [
         "src/cpp/server/load_reporter/constants.h",
         "src/cpp/server/load_reporter/load_data_store.h",
+    ],
+    language = "c++",
+    deps = [
+        "grpc++",
+    ],
+)
+
+grpc_cc_library(
+    name = "lb_get_cpu_stats",
+    srcs = [
+        "src/cpp/server/load_reporter/get_cpu_stats_linux.cc",
+        "src/cpp/server/load_reporter/get_cpu_stats_macos.cc",
+        "src/cpp/server/load_reporter/get_cpu_stats_unsupported.cc",
+        "src/cpp/server/load_reporter/get_cpu_stats_windows.cc",
+    ],
+    hdrs = [
+        "src/cpp/server/load_reporter/get_cpu_stats.h",
     ],
     language = "c++",
     deps = [
