@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['grpc_20c_2b_2b_20api',['gRPC C++ API',['../index.html',1,'']]],
+  ['grpc_20core',['GRPC Core',['../index.html',1,'']]],
   ['grpc_20c_20style_20guide',['GRPC C STYLE GUIDE',['../md_doc_c-style-guide.html',1,'']]],
   ['grpc_20command_20line_20tool',['gRPC command line tool',['../md_doc_command_line_tool.html',1,'']]],
   ['grpc_20compression',['gRPC Compression',['../md_doc_compression.html',1,'']]],
@@ -18,5 +18,5 @@ var searchData=
   ['grpc_20server_20reflection_20protocol',['GRPC Server Reflection Protocol',['../md_doc_server-reflection.html',1,'']]],
   ['grpc_20server_20reflection_20tutorial',['gRPC Server Reflection Tutorial',['../md_doc_server_reflection_tutorial.html',1,'']]],
   ['grpc_20wait_20for_20ready_20semantics',['gRPC Wait for Ready Semantics',['../md_doc_wait-for-ready.html',1,'']]],
-  ['grpc_20server_20backward_20compatibility_20issues_20and_20workarounds_20manageent',['gRPC Server Backward Compatibility Issues and Workarounds Manageent',['../md_doc_workarounds.html',1,'']]]
+  ['grpc_20server_20backward_20compatibility_20issues_20and_20workarounds_20management',['gRPC Server Backward Compatibility Issues and Workarounds Management',['../md_doc_workarounds.html',1,'']]]
 ];

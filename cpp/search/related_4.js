@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['grpcbufferwriterpeer',['GrpcBufferWriterPeer',['../classgrpc_1_1internal_1_1_grpc_buffer_writer.html#ad7d78d8afffe2e98007bd63036c19c42',1,'grpc::internal::GrpcBufferWriter']]]
+  ['channelresetconnectionbackoff',['ChannelResetConnectionBackoff',['../classgrpc_1_1_channel.html#afeee855c9424fd530c4aa98bce518243',1,'grpc::Channel']]]
 ];

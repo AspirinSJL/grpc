@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ordering_20status_20and_20reads_20in_20the_20grpc_20api',['Ordering Status and Reads in the gRPC API',['../md_doc_status_ordering.html',1,'']]]
+  ['moving_20grpc_20core_20to_20c_2b_2b',['Moving gRPC core to C++',['../md_doc_core_moving-to-c_09_09.html',1,'']]]
 ];

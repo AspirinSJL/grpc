@@ -1,9 +1,8 @@
 var searchData=
 [
-  ['thd_2eh',['thd.h',['../thd_8h.html',1,'']]],
-  ['time_2eh',['time.h',['../time_8h.html',1,'']]],
-  ['tls_2eh',['tls.h',['../tls_8h.html',1,'']]],
-  ['tls_5fgcc_2eh',['tls_gcc.h',['../tls__gcc_8h.html',1,'']]],
-  ['tls_5fmsvc_2eh',['tls_msvc.h',['../tls__msvc_8h.html',1,'']]],
-  ['tls_5fpthread_2eh',['tls_pthread.h',['../tls__pthread_8h.html',1,'']]]
+  ['pending_5fapi_5fcleanups_2emd',['pending_api_cleanups.md',['../pending__api__cleanups_8md.html',1,'']]],
+  ['port_5fplatform_2eh',['port_platform.h',['../impl_2codegen_2port__platform_8h.html',1,'(Global Namespace)'],['../support_2port__platform_8h.html',1,'(Global Namespace)']]],
+  ['propagation_5fbits_2eh',['propagation_bits.h',['../propagation__bits_8h.html',1,'']]],
+  ['protocol_2dhttp2_2emd',['PROTOCOL-HTTP2.md',['../_p_r_o_t_o_c_o_l-_h_t_t_p2_8md.html',1,'']]],
+  ['protocol_2dweb_2emd',['PROTOCOL-WEB.md',['../_p_r_o_t_o_c_o_l-_w_e_b_8md.html',1,'']]]
 ];
