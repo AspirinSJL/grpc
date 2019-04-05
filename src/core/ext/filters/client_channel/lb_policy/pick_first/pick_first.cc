@@ -185,7 +185,7 @@ void PickFirst::ShutdownLocked() {
   latest_pending_subchannel_list_.reset();
 }
 
-void PickFirst::ExitIdleLocked() {
+void PickFirst::ExitIdocked() {
   if (idle_) {
     idle_ = false;
     if (subchannel_list_ != nullptr &&
